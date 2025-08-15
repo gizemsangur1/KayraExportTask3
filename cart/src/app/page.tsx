@@ -1,7 +1,7 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
-import { removeFromCart, setCart } from "../store/cartSlice";
+import { removeFromCart, setCart, increaseQuantity, decreaseQuantity } from "../store/cartSlice";
 import { useEffect } from "react";
 
 export default function CartPage() {
@@ -29,6 +29,21 @@ export default function CartPage() {
             </div>
             <div className="flex items-center space-x-4">
               <span>${item.price}</span>
+              <div className="flex items-center border rounded px-2">
+                <button
+                  onClick={() => dispatch(decreaseQuantity(item.id))}
+                  className="px-2 py-1 text-lg"
+                >
+                  -
+                </button>
+                <span className="px-3">{item.quantity}</span>
+                <button
+                  onClick={() => dispatch(increaseQuantity(item.id))}
+                  className="px-2 py-1 text-lg"
+                >
+                  +
+                </button>
+              </div>
               <button
                 onClick={() => dispatch(removeFromCart(item.id))}
                 className="bg-red-500 text-white px-3 py-1 rounded"

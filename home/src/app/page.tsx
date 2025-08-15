@@ -25,17 +25,10 @@ export default function HomePage() {
 
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product))
-    toast.success(`${product.title} added to cart!`, {
-      style: {
-        background: '#1e2833',
-        color: '#fff',
-      },
-    })
   }
 
   return (
     <>
-      <Toaster position="top-right" />
       <main className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {products.map(product => (
           <div
