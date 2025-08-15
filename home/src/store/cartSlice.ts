@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 type Product = {
   id: number;
@@ -24,10 +25,12 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<Product>) => {
       state.items.push(action.payload);
       localStorage.setItem("cart", JSON.stringify(state.items));
+      toast.success(`${action.payload.title} sepete eklendi!`)
     },
     setCart: (state, action: PayloadAction<Product[]>) => {
       state.items = action.payload;
-      localStorage.setItem("cart", JSON.stringify(state.items));
+      localStorage.setItem("cart", JSON.stringify(state.items))
+      toast.error(`Ürün sepetten çıkarıldı!`)
     }
   },
 });

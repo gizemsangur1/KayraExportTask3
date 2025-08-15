@@ -1,50 +1,72 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../store/cartSlice";
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../store/cartSlice'
+import { ShoppingCartIcon } from '@heroicons/react/24/outline'
+import toast, { Toaster } from 'react-hot-toast'
 
 type Product = {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-};
+  id: number
+  title: string
+  price: number
+  image: string
+}
 
 export default function HomePage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const dispatch = useDispatch();
+  const [products, setProducts] = useState<Product[]>([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((data: Product[]) => setProducts(data));
-  }, []);
+    fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then((data: Product[]) => setProducts(data))
+  }, [])
+
+  const handleAddToCart = (product: Product) => {
+    dispatch(addToCart(product))
+    toast.success(`${product.title} added to cart!`, {
+      style: {
+        background: '#1e2833',
+        color: '#fff',
+      },
+    })
+  }
 
   return (
-    <main className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {products.map((product) => (
-        <div
-          key={product.id}
-          className="border rounded shadow p-4 flex flex-col"
-        >
-          <a href={`/products/${product.id}`}>
-            <img
-              src={product.image}
-              alt={product.title}
-              className="h-40 object-contain mb-4"
-            />
-            <h2 className="font-bold text-lg">{product.title}</h2>
-            <p className="text-gray-600">${product.price}</p>
-            <button
-              onClick={() => dispatch(addToCart(product))}
-              className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Add to Cart
-            </button>{" "}
-          </a>
-        </div>
-      ))}
-    </main>
-  );
+    <>
+      <Toaster position="top-right" />
+      <main className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {products.map(product => (
+          <div
+            key={product.id}
+            className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col"
+          >
+            <a href={`/products/${product.id}`} className="relative group">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="h-56 w-full object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform duration-300"
+              />
+            </a>
+            <div className="flex flex-col flex-1 p-5">
+              <h2 className="font-semibold text-lg line-clamp-2 mb-2 text-[#2d3d4d]">
+                {product.title}
+              </h2>
+              <p className="text-[#38536c] font-bold text-xl mb-4">
+                ${product.price}
+              </p>
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="mt-auto flex items-center justify-center gap-2 bg-gradient-to-r from-[#446785] to-[#38536c] hover:from-[#31475b] hover:to-[#2d3d4d] text-white px-5 py-2 rounded-xl transition-all"
+              >
+                <ShoppingCartIcon className="w-5 h-5" />
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        ))}
+      </main>
+    </>
+  )
 }
