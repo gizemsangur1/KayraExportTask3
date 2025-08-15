@@ -42,7 +42,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           <p className="text-lg font-semibold mb-6">${product.price}</p>
           <button
             onClick={() => handleAddToCart(product)}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 bg-gradient-to-r from-[#2d3d4d] to-[#799cb7] text-white rounded hover:bg-blue-700"
           >
             Add to Cart
           </button>

@@ -51,7 +51,7 @@ export default function HomePage() {
               </p>
               <button
                 onClick={() => handleAddToCart(product)}
-                className="mt-auto flex items-center justify-center gap-2 bg-gradient-to-r from-[#446785] to-[#38536c] hover:from-[#31475b] hover:to-[#2d3d4d] text-white px-5 py-2 rounded-xl transition-all"
+                className="mt-auto flex items-center justify-center gap-2 bg-gradient-to-r from-[#2d3d4d] to-[#799cb7] hover:from-[#31475b] hover:to-[#2d3d4d] text-white px-5 py-2 rounded-xl transition-all"
               >
                 <ShoppingCartIcon className="w-5 h-5" />
                 Add to Cart
