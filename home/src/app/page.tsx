@@ -28,19 +28,21 @@ export default function HomePage() {
           key={product.id}
           className="border rounded shadow p-4 flex flex-col"
         >
-          <img
-            src={product.image}
-            alt={product.title}
-            className="h-40 object-contain mb-4"
-          />
-          <h2 className="font-bold text-lg">{product.title}</h2>
-          <p className="text-gray-600">${product.price}</p>
-          <button
-            onClick={() => dispatch(addToCart(product))}
-            className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Add to Cart
-          </button>
+          <a href={`/products/${product.id}`}>
+            <img
+              src={product.image}
+              alt={product.title}
+              className="h-40 object-contain mb-4"
+            />
+            <h2 className="font-bold text-lg">{product.title}</h2>
+            <p className="text-gray-600">${product.price}</p>
+            <button
+              onClick={() => dispatch(addToCart(product))}
+              className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Add to Cart
+            </button>{" "}
+          </a>
         </div>
       ))}
     </main>
