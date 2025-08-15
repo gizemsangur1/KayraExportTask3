@@ -1,45 +1,44 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-
-type Product = {
-  id: number
-  title: string
-  price: number
-  image: string
-}
+"use client";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../store/store";
+import { removeFromCart, setCart } from "../store/cartSlice";
+import { useEffect } from "react";
 
 export default function CartPage() {
-  const [cart, setCart] = useState<Product[]>([])
+  const dispatch = useDispatch();
+  const items = useSelector((state: RootState) => state.cart.items);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart') || '[]')
-    setCart(storedCart)
-  }, [])
+    const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    dispatch(setCart(storedCart));
+  }, [dispatch]);
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0)
+  if (items.length === 0) {
+    return <div className="p-6">Cart is empty.</div>;
+  }
 
   return (
     <main className="p-6">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <>
-          <ul className="space-y-4">
-            {cart.map((item) => (
-              <li key={item.id} className="flex items-center gap-4 border-b pb-2">
-                <img src={item.image} alt={item.title} className="w-16 h-16 object-contain" />
-                <div className="flex-1">
-                  <h2 className="font-medium">{item.title}</h2>
-                  <p className="text-gray-600">${item.price}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-6 font-bold">Total: ${total.toFixed(2)}</div>
-        </>
-      )}
+      <ul className="space-y-4">
+        {items.map((item) => (
+          <li key={item.id} className="flex justify-between items-center border-b pb-2">
+            <div className="flex items-center space-x-4">
+              <img src={item.image} alt={item.title} className="w-16 h-16 object-contain" />
+              <span>{item.title}</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span>${item.price}</span>
+              <button
+                onClick={() => dispatch(removeFromCart(item.id))}
+                className="bg-red-500 text-white px-3 py-1 rounded"
+              >
+                Remove
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </main>
-  )
+  );
 }

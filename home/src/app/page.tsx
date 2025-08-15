@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
 type Product = {
   id: number;
@@ -11,15 +13,7 @@ type Product = {
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
-
-  const addToCart = (product: Product) => {
-    const existingCart: Product[] = JSON.parse(
-      localStorage.getItem("cart") || "[]"
-    );
-    const updatedCart = [...existingCart, product];
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    alert(`${product.title} added to cart!`);
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -42,7 +36,7 @@ export default function HomePage() {
           <h2 className="font-bold text-lg">{product.title}</h2>
           <p className="text-gray-600">${product.price}</p>
           <button
-            onClick={() => addToCart(product)}
+            onClick={() => dispatch(addToCart(product))}
             className="mt-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
           >
             Add to Cart
