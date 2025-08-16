@@ -1,34 +1,39 @@
-"use client"
+"use client";
 
-import { useDispatch } from "react-redux"
-import { addToCart } from "../store/cartSlice"
-import { ShoppingCartIcon } from "@heroicons/react/24/outline"
-import toast from "react-hot-toast"
+import { useDispatch } from "react-redux";
+import { addToCart } from "../store/cartSlice";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 type Product = {
-  id: number
-  title: string
-  price: number
-  image: string
-}
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+};
 
 export default function ProductCard({ product }: { product: Product }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product))
-    toast.success(`${product.title} added to cart!`)
-  }
+    dispatch(addToCart(product));
+  };
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col">
-      <a href={`/products/${product.id}`} className="relative group">
-        <img
+      <a
+        href={`/products/${product.id}`}
+        className="relative group block h-56 bg-gray-50"
+      >
+        <Image
+          fill
           src={product.image}
           alt={product.title}
-          className="h-56 w-full object-contain p-6 bg-gray-50 group-hover:scale-105 transition-transform duration-300"
+          className="object-contain p-6 group-hover:scale-105 transition-transform duration-300"
         />
       </a>
+
       <div className="flex flex-col flex-1 p-5">
         <h2 className="font-semibold text-lg line-clamp-2 mb-2 text-[#2d3d4d]">
           {product.title}
@@ -45,5 +50,5 @@ export default function ProductCard({ product }: { product: Product }) {
         </button>
       </div>
     </div>
-  )
+  );
 }

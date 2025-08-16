@@ -1,6 +1,5 @@
 "use client";
 import "./globals.css";
-import type { Metadata } from "next";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import Navbar from "../components/Navbar";
