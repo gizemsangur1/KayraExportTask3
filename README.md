@@ -2,6 +2,8 @@
 
 A small, production-minded microfrontend demo that feels like one site while running two independent Next.js apps in separate Docker containers.
 
+[Live Preview](https://kayra-export-task3-rkt6.vercel.app/)
+
 ## Overview
 
 Home is the shell and entry point; Cart is a fully standalone app that lives under /cart inside Home and can also be visited directly. Each app ships, scales, and fails independently—yet users get a seamless experience.
